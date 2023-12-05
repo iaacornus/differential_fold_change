@@ -9,7 +9,6 @@ class PreProcessData:
             self: Self,
             PATH: Optional[str] = None
         ) -> None:
-
         self.HOME: str = Path.home()
 
         if PATH is not None:
