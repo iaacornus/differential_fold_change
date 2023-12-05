@@ -1,7 +1,8 @@
 from os import rename, walk
 from os.path import exists
 from pathlib import Path
-from typing import Optional, Self
+from typing import Optional
+from typing_extensions import Self
 
 
 class PreProcessData:
