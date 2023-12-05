@@ -12,38 +12,41 @@ class PreProcessData:
         ) -> None:
         self.HOME: str = Path.home()
 
+        self.file_paths: list[str] = []
+
         if PATH is not None:
             self.PATH: str = PATH
         else:
             self.PATH: str = f"{self.HOME}/datasets"
 
-    def fetch(PATH: str) -> list[str] | None:
-        if not exists(PATH):
+    def fetch(self: Self) -> None:
+        if not exists(self.PATH):
             return None
 
-        file_paths: list[str] = []
-        for file in next(walk(PATH))[2]:
+        for file in next(walk(self.PATH))[2]:
             if file.endswith("xls"):
-                filenames: list[str] = file.split(" ")
-                file_paths.append(
-                    (
-                        f"{filenames[0]}_"
-                        + filenames[1]
-                            .replace('(', '')
-                            .replace(')','')
-                    )
-                )
+                self.file_paths.append(file)
                 continue
 
-        return file_paths
-
-    def rename_all(self: Self) -> int:
+    def rename_all(self: Self, file_paths: list[str]) -> int:
         """Rename all the files in the given path.
 
         Returns:
             integer indicating the status of the function.
         """
-        ...
+
+        for file in file_paths:
+            filenames: list[str] = file.split(" ")
+            rename(
+                f"{self.PATH}/{file}",
+                (
+                    f"{self.PATH}/"
+                    + f"{filenames[0]}_"
+                    + filenames[1]
+                        .replace('(', '')
+                        .replace(')','')
+                )
+            )
 
     def clean_data(
             self: Self,
