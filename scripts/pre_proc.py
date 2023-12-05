@@ -1,3 +1,5 @@
+from os import rename, walk
+from os.path import exists
 from pathlib import Path
 from typing import Optional, Self
 
@@ -14,6 +16,26 @@ class PreProcessData:
             self.PATH: str = PATH
         else:
             self.PATH: str = f"{self.HOME}/datasets"
+
+    def fetch(PATH: str) -> list[str] | None:
+        if not exists(PATH):
+            return None
+
+        file_paths: list[str] = []
+        for file in next(walk(PATH))[2]:
+            if file.endswith("xls"):
+                filenames: list[str] = file.split(" ")
+                file_paths.append(
+                    (
+                        f"{filenames[0]}_"
+                        + filenames[1]
+                            .replace('(', '')
+                            .replace(')','')
+                    )
+                )
+                continue
+
+        return file_paths
 
     def rename_all(self: Self) -> int:
         """Rename all the files in the given path.
