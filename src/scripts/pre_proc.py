@@ -1,4 +1,5 @@
-from os import rename, walk
+from shutil import copy
+from os import walk, mkdir
 from os.path import exists
 from pathlib import Path
 from typing import Optional
@@ -51,11 +52,14 @@ class PreProcessData:
 
         if out_path is None:
             out_path: str = self.PATH
+        else:
+            if not exists(out_path):
+                mkdir(out_path)
 
         try:
             for file in file_paths:
                 filenames: list[str] = file.split(" ")
-                rename(
+                copy(
                     f"{self.PATH}/{file}",
                     (
                         f"{out_path}/"
