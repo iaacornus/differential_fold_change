@@ -14,13 +14,12 @@ class PreProcessData:
         Arguments:
             PATH: Optional[str] -> None -- the path of the data.
         """
-        self.HOME: str = Path.home()
-
         self.file_paths: list[str] = [] # list of all datasets
                                         # in the given path
         if PATH is not None:
             self.PATH: str = PATH
         else:
+            self.HOME: str = Path.home()
             self.PATH: str = f"{self.HOME}/datasets" # default path of data
 
     def fetch(self: Self) -> int:
