@@ -23,19 +23,21 @@ class PreProcessData:
         else:
             self.PATH: str = f"{self.HOME}/datasets" # default path of data
 
-    def fetch(self: Self) -> None:
+    def fetch(self: Self) -> int:
         """ Fetches all the absolute file paths in the given PATH.
 
         Returns:
             integer indicating the status of the function.
         """
         if not exists(self.PATH):
-            return None
+            return 0
 
         for file in next(walk(self.PATH))[2]:
             if file.endswith("xls"):
                 self.file_paths.append(file)
                 continue
+
+        return 1
 
     def rename_all(self: Self, file_paths: list[str]) -> int:
         """ Rename all the files in the given path.
@@ -56,6 +58,8 @@ class PreProcessData:
                         .replace(')','')
                 )
             )
+
+        return 1
 
     def clean_data(
             self: Self,
