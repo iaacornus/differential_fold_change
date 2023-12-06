@@ -46,20 +46,23 @@ class PreProcessData:
             integer indicating the status of the function.
         """
 
-        for file in file_paths:
-            filenames: list[str] = file.split(" ")
-            rename(
-                f"{self.PATH}/{file}",
-                (
-                    f"{self.PATH}/"
-                    + f"{filenames[0]}_"
-                    + filenames[1]
-                        .replace('(', '')
-                        .replace(')','')
+        try:
+            for file in file_paths:
+                filenames: list[str] = file.split(" ")
+                rename(
+                    f"{self.PATH}/{file}",
+                    (
+                        f"{self.PATH}/"
+                        + f"{filenames[0]}_"
+                        + filenames[1]
+                            .replace('(', '')
+                            .replace(')','')
+                    )
                 )
-            )
-
-        return 1
+        except FileNotFoundError:
+            return 0
+        else:
+            return 1
 
     def clean_data(
             self: Self,
