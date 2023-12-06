@@ -38,12 +38,19 @@ class PreProcessData:
 
         return 1
 
-    def rename_all(self: Self, file_paths: list[str]) -> int:
+    def rename_all(
+            self: Self,
+            file_paths: list[str],
+            out_path: Optional[str] = None
+        ) -> int:
         """ Rename all the files in the given path.
 
         Returns:
             integer indicating the status of the function.
         """
+
+        if out_path is None:
+            out_path: str = self.PATH
 
         try:
             for file in file_paths:
@@ -51,7 +58,7 @@ class PreProcessData:
                 rename(
                     f"{self.PATH}/{file}",
                     (
-                        f"{self.PATH}/"
+                        f"{out_path}/"
                         + f"{filenames[0]}_"
                         + filenames[1]
                             .replace('(', '')
