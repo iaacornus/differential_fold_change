@@ -24,6 +24,11 @@ class PreProcessData:
             self.PATH: str = f"{self.HOME}/datasets" # default path of data
 
     def fetch(self: Self) -> None:
+        """ Fetches all the absolute file paths in the given PATH.
+
+        Returns:
+            integer indicating the status of the function.
+        """
         if not exists(self.PATH):
             return None
 
@@ -33,7 +38,7 @@ class PreProcessData:
                 continue
 
     def rename_all(self: Self, file_paths: list[str]) -> int:
-        """Rename all the files in the given path.
+        """ Rename all the files in the given path.
 
         Returns:
             integer indicating the status of the function.
@@ -60,7 +65,7 @@ class PreProcessData:
             filename: Optional[str] = None,
             output_path: Optional[str] | None = None
         )  -> int:
-        """Remove all of the unnecessary data from the given dataset.
+        """ Remove all of the unnecessary data from the given dataset.
 
         Arguments:
             filenames: list[str] - array containing all of the filenames
