@@ -23,16 +23,27 @@ class PreProcessData:
             self.HOME: str = Path.home()
             self.PATH: str = f"{self.HOME}/datasets" # default path of data
 
-    def fetch(self: Self) -> int:
+    def fetch(
+            self: Self,
+            PATH: Optional[str] = None,
+            update: Optional[bool] = False
+        ) -> int:
         """ Fetches all the absolute file paths in the given PATH.
 
         Returns:
             integer indicating the status of the function.
         """
-        if not exists(self.PATH):
+
+        if PATH is None:
+            PATH: str = self.PATH
+
+        if not exists(PATH):
             return 0
 
-        for file in next(walk(self.PATH))[2]:
+        if update:
+            self.file_paths.clear()
+
+        for file in next(walk(PATH))[2]:
             if file.endswith("xls"):
                 self.file_paths.append(file)
                 continue
